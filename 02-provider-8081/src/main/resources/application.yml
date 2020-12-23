@@ -42,9 +42,16 @@ eureka:
   client:
     service-url:
       # 指定当前Client所要连接的Eureka Server
-      defaultZone: http://localhost:8000/eureka
+#      defaultZone: http://localhost:8000/eureka
+      defaultZone: http://eureka8100.com:8100/eureka,http://eureka8200.com:8200/eureka,http://eureka8300.com:8300/eureka
+
   instance:
     instance-id: abcmsc-provider-8081
+    hostname: localhost
+    # 设置当前client每1秒发送一次心跳, 默认30秒
+    lease-renewal-interval-in-seconds: 1
+    # 指定让server认定当前client已经失效的时间, 将来可以从注册表中剔除了, 单位秒, 默认90
+    lease-expiration-duration-in-seconds: 3
 
 
 
@@ -75,3 +82,16 @@ info:
 #      kkb2: http://localhost:8000/eureka
 #    # 指定要连接的注册中心所在区域
 #    fetch-remote-regions-registry: xxx
+
+management:
+  # 开启所有监控终端
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  # 开启shutdown监控终端
+  # 开启后向http:localhost:8081/actuator/shutdown发送一个post请求, 可以服务下架
+  endpoint:
+    shutdown:
+      enabled: true

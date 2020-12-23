@@ -4,6 +4,7 @@ server:
 eureka:
   instance:
     hostname: localhost
+
   client:
     # 指定当前主机是否需要向Eureka Server注册自己
     register-with-eureka: false
@@ -13,3 +14,11 @@ eureka:
       # 当前Eureka Server对外暴露的服务地址
 #      defaultZone: http://$(eureka.instance.hostname}:${server:port}/eureka
       defaultZone: http://localhost:8000/eureka
+
+  server:
+    # 关闭自我保护机制, 默认为true(开启)
+    enable-self-preservation: false
+#    # 设置自我保护机制的开启阈值, 默认是0.85
+#    renewal-percent-threshold: 0.75
+    #设置server端剔除不可用服务的时间窗, 默认60000, 单位毫秒
+    eviction-interval-timer-in-ms: 4000
